@@ -59,7 +59,7 @@ def process_input(digit: str):
     if len(st.session_state.input_buffer) >= 6:
         return
     st.session_state.input_buffer += digit
-    update_display(float(st.session_state.input_buffer) if st.session_state.input_buffer else update_display(0.0)
+    update_display(float(st.session_state.input_buffer)) if st.session_state.input_buffer else update_display(0.0)
 
 def clear_input():
     st.session_state.input_buffer = ''
