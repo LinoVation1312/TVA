@@ -14,18 +14,16 @@ with st.form("input_form"):
     with col2:
         drinks_ttc = st.number_input("Prix TTC boissons (€)", min_value=0.0, step=0.5, format="%.2f")
     
-    meals = st.number_input("Nombre de repas", min_value=0, step=1)
-    
     submitted = st.form_submit_button("Calculer")
 
 # Calculs lors de la soumission
 if submitted:
     # Calcul des TVA
-    tva_20 = (food_ttc * 20 / 120) * meals
-    tva_10 = (drinks_ttc * 10 / 110) * meals
+    tva_20 = food_ttc * 20 / 120  # Calcul pour la nourriture
+    tva_10 = drinks_ttc * 10 / 110  # Calcul pour les boissons
     
     # Calcul du total TTC
-    total_ttc = (food_ttc + drinks_ttc) * meals
+    total_ttc = food_ttc + drinks_ttc
     
     # Affichage des résultats
     st.markdown("---")
@@ -41,7 +39,9 @@ if submitted:
     
     # Section d'informations
     st.markdown("---")
-    st.info("ℹ️ Rappel des taux de TVA :\n- Nourriture: 20%\n- Boissons: 10%")
+    st.info("""ℹ️ Rappel des taux de TVA :
+             \n- Nourriture: 20% (inclus dans le prix saisi)
+             \n- Boissons: 10% (inclus dans le prix saisi)""")
 
 # Pied de page
 st.markdown("---")
