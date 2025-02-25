@@ -22,6 +22,12 @@ if 'drinks_ttc' not in st.session_state:
 if 'selected_input' not in st.session_state:
     st.session_state.selected_input = 'Nourriture'
 
+# Dictionnaire de correspondance pour les clés
+KEY_MAPPING = {
+    'Nourriture': 'food_ttc',
+    'Boissons': 'drinks_ttc'
+}
+
 # Entête de l'application
 st.title("🍽️ TAVULEUR - Calculateur TVA")
 st.markdown("---")
@@ -53,15 +59,17 @@ with col2:
 
 # Pavé numérique tactile
 def update_value(digit):
-    current_value = st.session_state[st.session_state.selected_input.lower() + '_ttc']
+    current_key = KEY_MAPPING[st.session_state.selected_input]
+    current_value = st.session_state[current_key]
     new_value = str(current_value).replace('.', '') + digit
     if len(new_value) > 6:  # Limite de saisie
         return
     formatted_value = float(new_value) / 100
-    st.session_state[st.session_state.selected_input.lower() + '_ttc'] = formatted_value
+    st.session_state[current_key] = formatted_value
 
 def clear_value():
-    st.session_state[st.session_state.selected_input.lower() + '_ttc'] = 0.0
+    current_key = KEY_MAPPING[st.session_state.selected_input]
+    st.session_state[current_key] = 0.0
 
 # Disposition du clavier
 keypad = st.container()
@@ -89,21 +97,24 @@ with keypad:
     cols = st.columns(3)
     with cols[0]:
         if st.button("⌫", key="backspace"):
-            current = str(st.session_state[st.session_state.selected_input.lower() + '_ttc']).replace('.', '')[:-1]
-            st.session_state[st.session_state.selected_input.lower() + '_ttc'] = float(current)/100 if current else 0.0
+            current_key = KEY_MAPPING[st.session_state.selected_input]
+            current = str(st.session_state[current_key]).replace('.', '')[:-1]
+            st.session_state[current_key] = float(current)/100 if current else 0.0
     with cols[1]:
         if st.button("0", key="0"):
             update_value('0')
     with cols[2]:
         if st.button(".", key="decimal"):
-            current = str(st.session_state[st.session_state.selected_input.lower() + '_ttc'])
+            current_key = KEY_MAPPING[st.session_state.selected_input]
+            current = str(st.session_state[current_key])
             if '.' not in current:
-                st.session_state[st.session_state.selected_input.lower() + '_ttc'] = float(current + '.0')
+                st.session_state[current_key] = float(current + '.0')
     
     st.markdown('</div>', unsafe_allow_html=True)
     
     if st.button("Effacer tout", type="primary", use_container_width=True):
-        clear_value()
+        st.session_state.food_ttc = 0.0
+        st.session_state.drinks_ttc = 0.0
 
 # Calculs
 st.markdown("---")
