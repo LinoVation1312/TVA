@@ -2,31 +2,6 @@ import streamlit as st
 
 st.set_page_config(page_title="TAVULEUR - Calculateur TVA", layout="centered")
 
-# Configuration CSS responsive
-st.markdown("""
-<style>
-    .numeric-pad {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 4px;
-        width: 100%;
-    }
-    
-    .numeric-pad button {
-        font-size: 24px;
-        height: 70px;
-        margin: 0 !important;
-        border-radius: 8px !important;
-    }
-    
-    @media (max-width: 480px) {
-        .numeric-pad button {
-            height: 60px;
-            font-size: 20px;
-        }
-    }
-</style>
-""", unsafe_allow_html=True)
 
 # Initialisation session state
 if 'food_ttc' not in st.session_state:
