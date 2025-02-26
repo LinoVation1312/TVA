@@ -19,7 +19,7 @@ with st.form("input_form"):
 # Calculs lors de la soumission
 if submitted:
     # Calcul des TVA
-    tva_20 = drinks_tt - (drinks_ttc  / 1,20)
+    tva_20 = drinks_ttc - (drinks_ttc  / 1,20)
     tva_10 = food_ttc - (food_ttc / 1,10)
     
     # Calcul du total TTC
